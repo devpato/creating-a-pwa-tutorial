@@ -3,8 +3,9 @@
 let sw = null;
 
 if ("serviceWorker" in navigator) {
-  navigator.serviceWorker.register("sw.js").then(() => {
+  navigator.serviceWorker.register("sw.js").then(swRegistered => {
     console.log("[ServiceWorker**] - Registered");
+    sw = swRegistered;
     displayNotification();
   });
 }
@@ -24,7 +25,7 @@ function notification() {
     icon: "/icons/icon.png"
   };
 
-  new Notification("Hi there!", options);
+  sw.showNotification("Hi there!!", options);
 }
 
 function displayNotification() {
