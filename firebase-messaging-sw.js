@@ -1,6 +1,6 @@
-importScripts("https://www.gstatic.com/firebasejs/7.2.1/firebase-app.js");
-importScripts("https://www.gstatic.com/firebasejs/7.2.1/firebase-messaging.js");
-importScripts("https://www.gstatic.com/firebasejs/7.2.1/firebase-analytics.js");
+importScripts("https://www.gstatic.com/firebasejs/7.5.0/firebase-app.js");
+importScripts("https://www.gstatic.com/firebasejs/7.5.0/firebase-messaging.js");
+importScripts("https://www.gstatic.com/firebasejs/7.5.0/firebase-analytics.js");
 
 firebase.initializeApp({
   messagingSenderId: "452585455460"
