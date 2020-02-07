@@ -22,6 +22,7 @@ if ("serviceWorker" in navigator) {
     console.log("[ServiceWorker**] - Registered");
     sw = swRegistered;
     displayNotification();
+    document.querySelector("#share").addEventListener("click", onShare);
   });
 }
 
@@ -32,7 +33,7 @@ messaging
   })
   .then(token => {
     tokenString.innerHTML = "Token Is : " + token;
-    subscribeTokenToTopic(token, "hey");
+    subscribeTokenToTopic(token, "allUsers");
   })
   .catch(err => {
     console.log("Unable to get permission to notify", err);
@@ -58,7 +59,7 @@ function notification() {
     icon: "/icons/icon.png"
   };
 
-  sw.showNotification("Hi there!!", options);
+  new Notification("Hi there!!", options);
 }
 
 function displayNotification() {
@@ -84,7 +85,8 @@ function subscribeTokenToTopic(token, topic) {
   fetch("https://iid.googleapis.com/iid/v1/" + token + "/rel/topics/" + topic, {
     method: "POST",
     headers: new Headers({
-      Authorization: "key=YOUR-API-SERVER-KEY-HERE"
+      Authorization:
+        "key=AAAAaWAx_2Q:APA91bEz5F53ZIWPs70aQjdSflu-vKyVHMrOYvGe6jZEgc4QJtog-_k0iQpQtJX2lvcnd_SSnGTm8bI-PifpxQoe_VEo25j6Io4T1WILmY_F_93MSHJ9fYD5IYCHELym4SXOfeGsBM-n"
     })
   })
     .then(response => {
@@ -100,4 +102,29 @@ function subscribeTokenToTopic(token, topic) {
     .catch(error => {
       console.error(error);
     });
+}
+
+function onShare() {
+  const title = document.title;
+  const url = document.querySelector("link[rel=canonical]")
+    ? document.querySelector("link[rel=canonical]").href
+    : document.location.href;
+  const text = "Learn how to use the share api";
+
+  if (navigator.share) {
+    navigator
+      .share({
+        title,
+        url,
+        text
+      })
+      .then(() => {
+        alert(`Thanks for Sharing!`);
+      })
+      .catch(err => {
+        alert(`Couldn't share ${err}`);
+      });
+  } else {
+    alert(`Not supported !!`);
+  }
 }
