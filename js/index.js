@@ -32,6 +32,7 @@ messaging
   })
   .then(token => {
     tokenString.innerHTML = "Token Is : " + token;
+    subscribeTokenToTopic(token, "hey");
   })
   .catch(err => {
     console.log("Unable to get permission to notify", err);
@@ -76,4 +77,27 @@ function displayNotification() {
       "You denied permissions to notifications. Please go to your browser or phone setting to allow notifications."
     );
   }
+}
+
+function subscribeTokenToTopic(token, topic) {
+  console.log(token);
+  fetch("https://iid.googleapis.com/iid/v1/" + token + "/rel/topics/" + topic, {
+    method: "POST",
+    headers: new Headers({
+      Authorization: "key=YOUR-API-SERVER-KEY-HERE"
+    })
+  })
+    .then(response => {
+      if (response.status < 200 || response.status >= 400) {
+        throw "Error subscribing to  the following topic: " +
+          response.status +
+          " - " +
+          response.text();
+      } else {
+        console.log('Successfully subscribed to "' + topic + '"');
+      }
+    })
+    .catch(error => {
+      console.error(error);
+    });
 }
