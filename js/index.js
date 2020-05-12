@@ -10,7 +10,8 @@ const config = {
   projectId: "pwa-push-fcm",
   storageBucket: "pwa-push-fcm.appspot.com",
   messagingSenderId: "452585455460",
-  appId: "1:452585455460:web:57446702ddc55629738471"
+  appId: "1:452585455460:web:046c7c77aad56c75738471",
+  measurementId: "G-GW5P7QS9CT"
 };
 
 firebase.initializeApp(config);
@@ -92,9 +93,9 @@ function subscribeTokenToTopic(token, topic) {
     .then(response => {
       if (response.status < 200 || response.status >= 400) {
         throw "Error subscribing to  the following topic: " +
-          response.status +
-          " - " +
-          response.text();
+        response.status +
+        " - " +
+        response.text();
       } else {
         console.log('Successfully subscribed to "' + topic + '"');
       }
